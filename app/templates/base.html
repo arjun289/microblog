@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {% if title %} 
+	 <title>
+		 {{ title }} -microblog
+	 </title>
+     {% else %}
+     	 <title>
+	    Welcome to Blog				 
+	 </title> 
+     {% endif %}
+     {% extends 'bootstrap/base.html' %}
+
+</head>
+<body>
+     {% block navbar %}
+     <div class = "navbar"></div>
+    <div>
+        Microblog:<a href="{{ url_for('index') }}">Home</a>
+        {% if g.user.is_authenticated %}
+            | <a href="{{ url_for('user', nickname = g.user.nickname) }}">Your Profile</a>
+            | <a href="{{ url_for('logout') }}"> Logout</a>
+        {% endif %}
+    </div>
+     {% endblock %}
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block content %} {% endblock %}
+
+</body>
+</html>
